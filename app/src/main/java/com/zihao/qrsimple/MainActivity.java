@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * http://www.jianshu.com/p/e80a85b17920 参考
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
