@@ -12,7 +12,6 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 import com.zihao.qrsimple.utils.CheckPermissionUtils;
 
 /**
- * http://www.jianshu.com/p/e80a85b17920 参考
  */
 public class MainActivity extends AppCompatActivity {
 
