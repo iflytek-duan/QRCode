@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">QRCode</string>
     <string name="scan_qr_code">扫描二维码</string>
+    <string name="scan_cancel">取消</string>
+    <string name="scan_tips_text">请将扫描框对准产品包装盒06开头的条形码</string>
 </resources>

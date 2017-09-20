@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.zihao.qrsimple.scan.ScanActivity;
 import com.zihao.qrsimple.utils.CheckPermissionUtils;
 
 /**
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 打开默认二维码扫描界面
-                Intent intent = new Intent(MainActivity.this, CaptureActivity.class);
+                Intent intent = new Intent(MainActivity.this, ScanActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
