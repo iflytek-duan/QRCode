@@ -46,7 +46,7 @@ public class ScanActivity extends AppCompatActivity {
         // 执行扫面Fragment的初始化操作
         CaptureFragment captureFragment = new CaptureFragment();
         // 为二维码扫描界面设置定制化界面
-        CodeUtils.setFragmentArgs(captureFragment, R.layout.my_camera);
+        CodeUtils.setFragmentArgs(captureFragment, R.layout.capture_camera);
         // 添加解析回调
         captureFragment.setAnalyzeCallback(analyzeCallback);
         // 替换我们的扫描控件
