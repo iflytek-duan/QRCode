@@ -191,3 +191,11 @@
         }
     };
 ```
+## 其它功能设置
+1. **打开/关闭闪光灯**
+```java
+CodeUtils.isLightEnable(true);// 打开闪光灯
+CodeUtils.isLightEnable(false);// 关闭闪光灯
+```
+2. **更换扫描提示音**
+在res目录下新建名为raw的文件夹，然后将提示音文件命名为beep.ogg拷贝到res/raw下即可。
