@@ -47,11 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private void initPermission() {
         //检查权限
         String[] permissions = CheckPermissionUtils.checkPermission(this);
-        if (permissions.length == 0) {
-            //权限都申请了
-            //是否登录
-        } else {
-            //申请权限
+        if (permissions.length == 0) {// 权限都申请了
+            // 是否登录
+        } else {// 申请权限
             ActivityCompat.requestPermissions(this, permissions, 100);
         }
     }
@@ -62,17 +60,22 @@ public class MainActivity extends AppCompatActivity {
 
         // 处理二维码扫描结果
         if (requestCode == REQUEST_CODE) {
-            //处理扫描结果（在界面上显示）
+            // 处理扫描结果（在界面上显示）
             if (null != data) {
                 Bundle bundle = data.getExtras();
                 if (bundle == null) {
                     return;
                 }
-                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
-                    String result = bundle.getString(CodeUtils.RESULT_STRING);
-                    Toast.makeText(this, "解析结果:" + result, Toast.LENGTH_LONG).show();
-                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                    Toast.makeText(MainActivity.this, "解析二维码失败", Toast.LENGTH_LONG).show();
+
+                switch (bundle.getInt(CodeUtils.RESULT_TYPE)) {
+                    case CodeUtils.RESULT_SUCCESS:// 解析成功
+                        Toast.makeText(this, "解析结果:" + bundle.getString(CodeUtils.RESULT_STRING),
+                                Toast.LENGTH_LONG).show();
+                        break;
+                    case CodeUtils.RESULT_FAILED:// 解析失败
+                        Toast.makeText(MainActivity.this, bundle.getString(CodeUtils.RESULT_STRING),
+                                Toast.LENGTH_LONG).show();
+                        break;
                 }
             }
         }

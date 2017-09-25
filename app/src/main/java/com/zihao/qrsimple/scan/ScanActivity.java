@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
@@ -18,7 +19,12 @@ import com.zihao.qrsimple.R;
  * Date：2017/9/19 16:43
  * Version：v1.0
  */
-public class ScanActivity extends AppCompatActivity {
+public class ScanActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String QR_PREFIX = "06";// 条形码前缀
+
+    private Button btnLight;
+    private boolean isEnableLight = false;// 标识是否打开闪光灯，默认为否
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,12 +35,10 @@ public class ScanActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        findViewById(R.id.scan_btn_cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ScanActivity.this.finish();
-            }
-        });
+        btnLight = (Button) findViewById(R.id.scan_btn_light);
+
+        findViewById(R.id.scan_btn_cancel).setOnClickListener(this);
+        btnLight.setOnClickListener(this);
 
         replaceCaptureFragment();
     }
@@ -61,8 +65,15 @@ public class ScanActivity extends AppCompatActivity {
         public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
-            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
-            bundle.putString(CodeUtils.RESULT_STRING, result);
+
+            if (result.startsWith(QR_PREFIX)) {// 如果包含"06"前缀，则表示扫描成功
+                bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
+                bundle.putString(CodeUtils.RESULT_STRING, result);
+            } else {// 不包含"06"前缀表明格式不正确
+                bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
+                bundle.putString(CodeUtils.RESULT_STRING, "条形码格式不正确");
+            }
+
             resultIntent.putExtras(bundle);
             ScanActivity.this.setResult(RESULT_OK, resultIntent);
             ScanActivity.this.finish();
@@ -73,10 +84,24 @@ public class ScanActivity extends AppCompatActivity {
             Intent resultIntent = new Intent();
             Bundle bundle = new Bundle();
             bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
-            bundle.putString(CodeUtils.RESULT_STRING, "");
+            bundle.putString(CodeUtils.RESULT_STRING, "解析条形码失败");
             resultIntent.putExtras(bundle);
             ScanActivity.this.setResult(RESULT_OK, resultIntent);
             ScanActivity.this.finish();
         }
     };
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.scan_btn_cancel:// 取消
+                ScanActivity.this.finish();
+                break;
+            case R.id.scan_btn_light:// 灯光控制
+                isEnableLight = !isEnableLight;
+                CodeUtils.isLightEnable(isEnableLight);
+                btnLight.setText(isEnableLight ? R.string.scan_close_light : R.string.scan_open_light);
+                break;
+        }
+    }
 }

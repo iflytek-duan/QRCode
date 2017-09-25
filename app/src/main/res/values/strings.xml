@@ -3,4 +3,6 @@
     <string name="scan_qr_code">扫描二维码</string>
     <string name="scan_cancel">取消</string>
     <string name="scan_tips_text">请将扫描框对准产品包装盒06开头的条形码</string>
+    <string name="scan_open_light">打开手电筒</string>
+    <string name="scan_close_light">关闭手电筒</string>
 </resources>
