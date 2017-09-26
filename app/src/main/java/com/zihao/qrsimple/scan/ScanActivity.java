@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.zihao.qrsimple.R;
 
 /**
@@ -69,9 +70,13 @@ public class ScanActivity extends AppCompatActivity implements View.OnClickListe
             if (result.startsWith(QR_PREFIX)) {// 如果包含"06"前缀，则表示扫描成功
                 bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
                 bundle.putString(CodeUtils.RESULT_STRING, result);
+                ZXingLibrary.getInstance().setPlayBeep(true);
+                ZXingLibrary.getInstance().setVibrate(false);// 成功时关闭震动效果
             } else {// 不包含"06"前缀表明格式不正确
                 bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
                 bundle.putString(CodeUtils.RESULT_STRING, "条形码格式不正确");
+                ZXingLibrary.getInstance().setPlayBeep(false);// 失败时关闭提示音
+                ZXingLibrary.getInstance().setVibrate(true);
             }
 
             resultIntent.putExtras(bundle);

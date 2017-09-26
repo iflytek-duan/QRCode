@@ -17,6 +17,6 @@ public class QrApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ZXingLibrary.initDisplayOpinion(this);// 初始化二维码扫描工具
+        ZXingLibrary.getInstance().initDisplayOpinion(this);// 初始化二维码扫描工具
     }
 }
